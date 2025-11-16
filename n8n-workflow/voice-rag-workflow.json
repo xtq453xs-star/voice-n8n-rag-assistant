@@ -1,0 +1,146 @@
+{
+  "name": "音声対話式 RAG アシスタント",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "voice",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "b03ab535-fcfb-4119-a532-370e4e9439d8",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "106b3792-7e5c-4105-9213-d55934af4bf3",
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://anythingllm:3001/api/v1/workspace/m-stage/chat",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 2VDH3QR-0X34AYD-PF8PD6A-W7WWAZP"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": \"={{ $json.body.text }}\",\n  \"threadId\": \"interview\"\n}\n",
+        "options": {}
+      },
+      "id": "e7fdf83c-7312-4815-b44f-2d074e072a02",
+      "name": "AIアシスタント呼び出し",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        208,
+        0
+      ],
+      "typeVersion": 4.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        624,
+        0
+      ],
+      "id": "6d8e095c-5abe-4421-ad70-2a358017233b",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78507faa-a2cf-40b4-9d09-9cc057fba824",
+              "name": "reply",
+              "value": "={{$json.textResponse}}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "2c13c192-8070-45c7-b1c2-210cc5a3cbd2",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AIアシスタント呼び出し",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AIアシスタント呼び出し": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "FdgRGRdbTJ8V0pjC",
+    "availableInMCP": false,
+    "executionOrder": "v1"
+  },
+  "versionId": "16659b2e-d216-4cb5-a343-e79f522949ef",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7efddcacea4c392cd741b38d1082b1f520d8828cdf74c7da9a0850cd916b6748"
+  },
+  "id": "xzBpBaK6RStSd11A",
+  "tags": [
+    {
+      "updatedAt": "2025-10-30T12:24:36.310Z",
+      "createdAt": "2025-10-30T12:24:36.310Z",
+      "id": "xMnNuEWjxnPbWhfP",
+      "name": "✅ 本番"
+    }
+  ]
+}

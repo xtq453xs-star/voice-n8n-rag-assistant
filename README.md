@@ -2,7 +2,8 @@ files:
   - path: README.md
     content: |
       # voice-n8n-rag-assistant
-
+      このリポジトリは、社内ヘルプデスク・FAQ対応・ナレッジ検索AIを素早く構築するためのスターターキットです。
+    
       音声入力 × n8n × RAG を連携させた対話型アシスタントのテンプレートです。  
       音声 → テキスト化 → RAG検索 → 回答生成 → Web UI までを自動化します。
 

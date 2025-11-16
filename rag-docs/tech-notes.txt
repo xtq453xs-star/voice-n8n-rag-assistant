@@ -1,0 +1,4 @@
+・n8n はワークフロー自動化ツールで、Webhook や API 呼び出しが容易に設定できる。
+・AnythingLLM はローカルまたはセルフホストで動作するナレッジベース型 AI。
+・本テンプレートでは AnythingLLM の "API /v1/workspace/{id}/chat" を利用している。
+・LLM への問い合わせは JSON 形式で送信し、回答は content 部分に含まれる。
